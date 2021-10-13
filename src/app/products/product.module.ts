@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   imports: [
     SharedModule,
     RouterModule.forChild([
-      { path: 'products', component: ProductListComponent }
+      { path: 'products', component: ProductListComponent },
     ])
   ],
   declarations: [
