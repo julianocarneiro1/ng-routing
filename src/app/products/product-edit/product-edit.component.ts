@@ -16,15 +16,18 @@ export class ProductEditComponent implements OnInit {
 
   product: Product;
 
-  constructor(private productService: ProductService,
-              private messageService: MessageService,
-              private route: ActivatedRoute,
-              private router: Router) { }
+  constructor(
+    private productService: ProductService,
+    private messageService: MessageService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit() {
-    const resolvedData: ProductResolved = this.route.snapshot.data['resolvedData']
-    this.errorMessage = resolvedData.error
-    this.onProductRetrieved(resolvedData.product)
+    this.route.data.subscribe(data => {
+      const resolvedData: ProductResolved = data['resolvedData']
+      this.errorMessage = resolvedData.error
+      this.onProductRetrieved(resolvedData.product)
+    })
   }
 
   onProductRetrieved(product: Product): void {
@@ -49,10 +52,10 @@ export class ProductEditComponent implements OnInit {
       if (confirm(`Really delete the product: ${this.product.productName}?`)) {
         this.productService.deleteProduct(this.product.id).subscribe({
           next: () => this.onSaveComplete(`${this.product.productName} was deleted`),
-          error: err => this.errorMessage = err          
+          error: err => this.errorMessage = err
         });
       }
-    }    
+    }
   }
 
   saveProduct(): void {
@@ -79,6 +82,6 @@ export class ProductEditComponent implements OnInit {
     }
 
     // Navigate back to the product list
-    this.router.navigateByUrl("/products")    
+    this.router.navigateByUrl("/products")
   }
 }
