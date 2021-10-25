@@ -10,6 +10,7 @@ import { ProductEditTagsComponent } from './product-edit/product-edit-tags.compo
 import { SharedModule } from '../shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { AuthGuard } from '../user/auth.guard'
+import { ProductEditGuard } from '../products/product-edit/product-edit.guard'
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { AuthGuard } from '../user/auth.guard'
           {
             path: ':id/edit',
             component: ProductEditComponent,
+            canDeactivate: [ProductEditGuard],
             resolve: { resolvedData: ProductResolver },
             children: [
               { path: '', redirectTo: 'info', pathMatch: 'full' },
