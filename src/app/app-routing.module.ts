@@ -9,7 +9,9 @@ import { AuthGuard } from './user/auth.guard'
     imports: [
         RouterModule.forRoot([
             { path: 'welcome', component: WelcomeComponent },
-            { path: 'products',
+            {
+                path: 'products',
+                canLoad: [AuthGuard],
                 canActivate: [AuthGuard],
                 loadChildren: () =>
                 import('./products/product.module').then(m => m.ProductModule)
