@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { PreloadAllModules, RouterModule } from '@angular/router';
 
 import { WelcomeComponent } from './home/welcome.component';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -11,14 +11,13 @@ import { AuthGuard } from './user/auth.guard'
             { path: 'welcome', component: WelcomeComponent },
             {
                 path: 'products',
-                canLoad: [AuthGuard],
                 canActivate: [AuthGuard],
                 loadChildren: () =>
                 import('./products/product.module').then(m => m.ProductModule)
             },
             { path: '', redirectTo: 'welcome', pathMatch: 'full' },
             { path: '**', component: PageNotFoundComponent }
-          ], { enableTracing: true }),
+          ], { enableTracing: true, preloadingStrategy: PreloadAllModules }),
     ],
     exports: [RouterModule]
 })
